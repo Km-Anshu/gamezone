@@ -1,28 +1,8 @@
-// A mock function to mimic making an async request for data
+import { io } from "socket.io-client";
 
-export const url = "https://backend-test.data-vault.vretail.space";
-export const fetchFilterData = async (params = "") => {
-  const response = await fetch(`${url}/${params}`, {
-    method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ amount }),
-  });
-  const result: { data: any } = await response.json();
+export const url = "http://localhost:3000/api/users/v1/x";
 
-  return result;
-};
-
-export const patchFilterData = async (params = "", body: any) => {
-  const response = await fetch(`${url}/${params}`, {
-    method: "PATCH",
-    body: JSON.stringify(body),
-  });
-
-  const result: { data: any } = await response.json();
-  return result;
-};
-
-export const postFilterData = async (params = "", body: any) => {
+export const postUserInfo = async (params = "", body: any) => {
   const response = await fetch(`${url}/${params}`, {
     headers: { "Content-Type": "application/json" },
 
@@ -31,5 +11,25 @@ export const postFilterData = async (params = "", body: any) => {
   });
 
   const result: { data: any } = await response.json();
+  return result;
+};
+
+const connectToSocket = () => {
+  const socket = io(url, {
+    // transports: ["websocket", "polling"],
+  });
+  return socket;
+};
+
+export const socket = connectToSocket();
+
+export const fetchUserData = async (params = "") => {
+  const response = await fetch(`${url}/${params}`, {
+    method: "GET",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ amount }),
+  });
+  const result: { data: any } = await response.json();
+
   return result;
 };
