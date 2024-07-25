@@ -11,14 +11,13 @@ const Page = () => {
   const [winner, setWinner] = useState(null);
   const [user, setUser] = useState<any>(null);
 
-  // Function to fetch user data
   const fetchData = async () => {
     try {
       const response = (await fetchUserData(
         `users:${window.localStorage.getItem("userId")}`
       )) as any;
       if (response?.Response?.message === "success") {
-        setUser(response.data); // Assuming your API response has a 'data' field containing user info
+        setUser(response.data);
       } else {
         console.error("Failed to fetch user data");
       }
@@ -28,22 +27,18 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetchData(); // Fetch user data on component mount
+    fetchData();
   }, []);
 
-  // Function to handle click on a cell
   const handleClick = (index: any) => {
-    if (board[index] || winner) return; // Ignore click if cell is already filled or there's a winner
-
+    if (board[index] || winner) return;
     const newBoard = [...board];
-    newBoard[index] = xIsNext ? "X" : "O"; // Assign 'X' or 'O' based on current player's turn
+    newBoard[index] = xIsNext ? "X" : "O";
     setBoard(newBoard);
 
-    // Check for winner after each move
     const newWinner = calculateWinner(newBoard);
     setWinner(newWinner);
 
-    // If there's a winner, update router query parameters to show game result
     if (newWinner) {
       router.push(
         `/game-started?room-id=${
@@ -52,10 +47,10 @@ const Page = () => {
       );
     }
 
-    setXIsNext(!xIsNext); // Toggle player turn
+    setXIsNext(!xIsNext);
   };
 
-  // Function to calculate the winner
+  // winner
   const calculateWinner = (board: any) => {
     const winConditions = [
       [0, 1, 2],
@@ -71,18 +66,17 @@ const Page = () => {
     for (let condition of winConditions) {
       const [a, b, c] = condition;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return board[a]; // Return 'X' or 'O' if there's a winner
+        return board[a];
       }
     }
 
-    return null; // Return null if no winner
+    return null;
   };
 
-  // Function to reset the game
   const resetGame = () => {
-    setBoard(Array(9).fill(null)); // Reset board
-    setWinner(null); // Clear winner
-    setXIsNext(true); // Set X to start the next game
+    setBoard(Array(9).fill(null));
+    setWinner(null);
+    setXIsNext(true);
   };
 
   return (
@@ -101,7 +95,7 @@ const Page = () => {
         </div>
       ) : (
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold">Tic Tac Toe</h1>
+          <h1 className="text-3xl font-bold">Let's Play</h1>
           <p className="text-lg">
             {xIsNext
               ? `Next Player: ${user?.name}`
