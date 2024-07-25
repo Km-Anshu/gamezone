@@ -21,11 +21,11 @@ export default function Home() {
     //     }
     // }
 
-    if (response.message === "success") {
-      window.localStorage.setItem("userId", response.data._id);
+    if (true) {
+      window.localStorage.setItem("userId", "response.data._id");
 
       router.push(
-        `/room?room-id=${response.data.gameId}&user-id=${response.data._id}`,
+        `/room?room-id=${"response.data.gameId"}&user-id=${"response.data._id"}`,
         { scroll: false }
       );
     }

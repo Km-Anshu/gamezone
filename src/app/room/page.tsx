@@ -28,13 +28,11 @@ const Page = ({}) => {
           background: "lightblue",
         }}
       >
-        <div className="d-flex flex-col">
+        <div className="d-flex flex-col my-12">
           {users?.map((data: any, idx: number) => {
             return <h4 key={idx}> {data.name}</h4>;
           })}
-          {/* <h4>Anshu</h4>
-          <h4>Anshu</h4>
-          <h4>Anshu</h4> */}
+          {users.length < 1 && <h4>{window.localStorage.userInfo}</h4>}
         </div>
       </div>
     </>
